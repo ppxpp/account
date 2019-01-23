@@ -328,3 +328,11 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+Account.sln
+Account.vcxproj.filters
+Account.vcxproj
+.vscode/
+*.sln
+*.vcxproj*
+third_party/curl/share/
+third_party/curl-7.63.0/

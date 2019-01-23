@@ -1,0 +1,26 @@
+
+user_info = record {
+    user_name: string;
+    pwd_hash: string;
+	device: string;
+}
+
+auth_info = record {
+	token: string;
+}
+
+auth_reply = record {
+	err: i32;
+	msg: string;
+	data: auth_info;
+}
+
+auth = interface +c {
+		
+	static create():auth;
+
+	sign_up(user:user_info): auth_reply;
+	sign_in(user:user_info): auth_reply;
+	sign_out(auth:auth_info): auth_reply;
+	update(user:user_info): i32;
+}

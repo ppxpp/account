@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package auth;
+
+service Auth {
+	
+	rpc SignUp(UserInfo) returns (AuthReply) {}
+
+	rpc SignIn(UserInfo) returns (AuthReply) {}
+
+	rpc SignOut(AuthInfo) returns (AuthReply) {}
+}
+
+message UserInfo {
+    string userName = 1;
+	string pwdHash = 2;
+	string device = 3;
+}
+
+message AuthReply {
+    int32 err = 1;
+	string msg = 2;
+	AuthInfo data = 3;
+}
+
+message AuthInfo {
+	string token = 1;
+}
+
+
