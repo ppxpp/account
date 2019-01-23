@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.grpc.helloworldexample.cpp" >
+          xmlns:tools="http://schemas.android.com/tools"
+          package="io.grpc.helloworldexample.cpp">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name="me.ppxpp.account.app.AccountApplication"
         android:allowBackup="false"
+        tools:replace="android:allowBackup"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Base.V7.Theme.AppCompat.Light" >
+        android:theme="@style/Base.V7.Theme.AppCompat.Light"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".HelloworldActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
+        </activity>
+        <activity android:name="me.ppxpp.account.activity.SignUpActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <receiver android:name="me.ppxpp.account.push.MessageReceiver">
+            <intent-filter>
+                <!-- 接收消息透传 -->
+                <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
+                <!-- 监听注册、反注册、设置/删除标签、通知被点击等处理结果 -->
+                <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

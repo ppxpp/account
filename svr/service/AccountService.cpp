@@ -60,10 +60,14 @@ std::string refreshUserToken(std::string userName, std::string curtDevice)
 		// notify this token is expired
 		db.setTokenStatus(token.getToken(), TokenStatus::CANCELED);
 		std::string device = token.getDevice();
-		// std::thread([device, userName] {
-		//	Push::pushOfflineNotification(device, userName);
-		//});
-		Push::pushOfflineNotification(device, userName);
+		if (!device.empty() && device.compare(curtDevice) != 0)
+		{
+			// 考虑采用异步线程处理
+			// std::thread([device, userName] {
+			//	Push::pushOfflineNotification(device, userName);
+			//});
+			Push::pushOfflineNotification(device, userName);
+		}
 	}
 	// create a new token
 	token.setToken(Encrypt::genTokenForUser(userName));
@@ -96,11 +100,12 @@ void AccountService::signUp(std::string userName, std::string password, std::str
 		ret = db.newAccount(&account);
 		if (ret == 0)
 		{
-			std::string token = refreshUserToken(userName, nullptr);
+			std::string token = refreshUserToken(userName, deivce);
 			if (!token.empty())
 			{
 				result->setErr(ResultCode::OK);
 				result->setToken(token);
+				std::cout << "signUp success" << std::endl;
 			}
 			else
 			{
@@ -165,7 +170,7 @@ void AccountService::signIn(std::string userName, std::string password, std::str
 		{
 			// signIn faild
 			std::cout << "password error, pwd in db = " << pwdHash << ", salt in db = " << salt << ", pwd input = " << password << ", pwd cal = " << hash << std::endl;
-			result->setErr(ResultCode::SIGN_IN_ERROR);
+			result->setErr(ResultCode::USER_NOT_FOUND);
 		}
 	}
 	else if (ret == 1) {

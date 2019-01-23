@@ -62,7 +62,7 @@ int AccountDb::newAccount(Account* account)
 		con = driver->connect("tcp://127.0.0.1:3306", "root", "root");
 		/* Connect to the MySQL test database */
 		con->setSchema("account");
-		stmt = con->prepareStatement("insert into `tbl_user`(`user_name`, `pwd_hash`, `salt`) values (?, ?, ?, ?)");
+		stmt = con->prepareStatement("insert into `tbl_user`(`user_name`, `pwd_hash`, `salt`) values (?, ?, ?)");
 		stmt->setString(1, account->getUserName());
 		stmt->setString(2, account->getPwdHash());
 		stmt->setString(3, account->getSalt());

@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "io.grpc.android.cpp.helloworldexample"
+        applicationId "me.ppxpp.account"
         minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
@@ -30,6 +30,10 @@ android {
             }
         }
         ndk.abiFilters 'x86'
+        manifestPlaceholders = [
+                XG_ACCESS_ID:"2100325838",
+                XG_ACCESS_KEY:"A1K4D2L91KHW",
+        ]
     }
     buildTypes {
         debug {
@@ -53,4 +57,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'com.kaopiz:kprogresshud:1.0.2'
+    //根据需求选择对应的版本号
+    compile 'com.tencent.xinge:xinge:3.1.2-beta'
+    compile 'com.tencent.wup:wup:1.0.0.E-release'
+    compile 'com.tencent.mid:mid:3.9.0-alpha'
 }
