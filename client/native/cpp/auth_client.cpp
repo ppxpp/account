@@ -8,6 +8,7 @@ AuthClient::AuthClient()
 
 auth::AuthReply AuthClient::signUp(const std::string userName, const std::string password, const std::string device)
 {
+    // todo 增加密码加密逻辑
     auth::UserInfo info;
     info.set_username(userName);
     info.set_pwdhash(password);
@@ -26,6 +27,7 @@ auth::AuthReply AuthClient::signUp(const std::string userName, const std::string
 
 auth::AuthReply AuthClient::signIn(const std::string userName, const std::string password, const std::string device)
 {
+     // todo 增加密码加密逻辑
     auth::UserInfo info;
     info.set_username(userName);
     info.set_pwdhash(password);
