@@ -17,6 +17,7 @@ int AccountDb::getAccount(std::string userName, Account * account)
 	sql::PreparedStatement* stmt;
 	try {
 		driver = get_driver_instance();
+		// todo 使用安全的账号进行连接
 		con = driver->connect("tcp://127.0.0.1:3306", "root", "root");
 		/* Connect to the MySQL test database */
 		con->setSchema("account");
