@@ -13,7 +13,7 @@ void RunServer() {
   AuthImpl service;
 
   ServerBuilder builder;
-  // Listen on the given address without any authentication mechanism.
+  // todo 使用SST连接
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
   // Register "service" as the instance through which we'll communicate with
   // clients. In this case it corresponds to an *synchronous* service.
