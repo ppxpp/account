@@ -8,6 +8,10 @@
 #include "driver.h"
 #include "prepared_statement.h"
 
+std::string MYSQL_HOST("tcp://docker_mysql:3306");
+std::string MYSQL_USER("root");
+std::string MYSQL_PWD("root");
+
 int AccountDb::getAccount(std::string userName, Account * account)
 {
 	int ret = -1;
@@ -17,7 +21,7 @@ int AccountDb::getAccount(std::string userName, Account * account)
 	sql::PreparedStatement* stmt;
 	try {
 		driver = get_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "root");
+		con = driver->connect(MYSQL_HOST, MYSQL_USER, MYSQL_PWD);
 		/* Connect to the MySQL test database */
 		con->setSchema("account");
 		stmt = con->prepareStatement("SELECT `user_name`, `pwd_hash`, `salt` from tbl_user where `user_name`=?");
@@ -59,7 +63,7 @@ int AccountDb::newAccount(Account* account)
 	sql::PreparedStatement* stmt;
 	try {
 		driver = get_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "root");
+		con = driver->connect(MYSQL_HOST, MYSQL_USER, MYSQL_PWD);
 		/* Connect to the MySQL test database */
 		con->setSchema("account");
 		stmt = con->prepareStatement("insert into `tbl_user`(`user_name`, `pwd_hash`, `salt`) values (?, ?, ?)");
@@ -92,7 +96,7 @@ int AccountDb::setAccountSecret(std::string userName, std::string newSalt, std::
 	sql::PreparedStatement* stmt;
 	try {
 		driver = get_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "root");
+		con = driver->connect(MYSQL_HOST, MYSQL_USER, MYSQL_PWD);
 		/* Connect to the MySQL test database */
 		con->setSchema("account");
 		stmt = con->prepareStatement("update `tbl_user` set `salt`=?, `pwd_hash`=? where `user_name`=?");
@@ -126,7 +130,7 @@ int AccountDb::getToken(std::string userName, int status, Token* token)
 	sql::PreparedStatement* stmt;
 	try {
 		driver = get_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "root");
+		con = driver->connect(MYSQL_HOST, MYSQL_USER, MYSQL_PWD);
 		/* Connect to the MySQL test database */
 		con->setSchema("account");
 		stmt = con->prepareStatement("SELECT `token`, `device` from tbl_token where `user_name`=? and `status`=?");
@@ -170,7 +174,7 @@ int AccountDb::setTokenStatus(std::string token, int newStatus)
 	sql::PreparedStatement* stmt;
 	try {
 		driver = get_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "root");
+		con = driver->connect(MYSQL_HOST, MYSQL_USER, MYSQL_PWD);
 		/* Connect to the MySQL test database */
 		con->setSchema("account");
 		stmt = con->prepareStatement("update `tbl_token` set `status`=? where `token`=?");
@@ -201,7 +205,7 @@ int AccountDb::newToken(Token* token, std::string userName, int status)
 	sql::PreparedStatement* stmt;
 	try {
 		driver = get_driver_instance();
-		con = driver->connect("tcp://127.0.0.1:3306", "root", "root");
+		con = driver->connect(MYSQL_HOST, MYSQL_USER, MYSQL_PWD);
 		/* Connect to the MySQL test database */
 		con->setSchema("account");
 		stmt = con->prepareStatement("insert into `tbl_token`(`user_name`, `token`, `status`, `device`) values (?, ?, ?, ?)");

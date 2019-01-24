@@ -125,6 +125,7 @@ void AccountService::signUp(std::string userName, std::string password, std::str
 
 void AccountService::signIn(std::string userName, std::string password, std::string device, SignResult* result)
 {
+	std::cout << "signIn" << std::endl;
 	AccountDb db;
 	Account account;
 	int ret = db.getAccount(userName, &account);

@@ -336,3 +336,4 @@ Account.vcxproj
 *.vcxproj*
 third_party/curl/share/
 third_party/curl-7.63.0/
+client/android/account/app/jniLibs/

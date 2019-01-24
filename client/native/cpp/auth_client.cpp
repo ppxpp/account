@@ -2,7 +2,7 @@
 
 AuthClient::AuthClient()
 {
-    this->stub_ = auth::Auth::NewStub(grpc::CreateChannel("192.168.56.101:50051",
+    this->stub_ = auth::Auth::NewStub(grpc::CreateChannel("66.42.32.104:50051",
         grpc::InsecureChannelCredentials()));
 }
 

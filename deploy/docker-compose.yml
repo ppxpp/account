@@ -1,0 +1,19 @@
+version: '3'
+services:
+  account_svr:
+    build: .
+    links:
+     - mysql:docker_mysql
+    ports:
+     - "50051:50051"
+  mysql:
+    image: "mysql:5.7"
+    container_name: mysql_5_7
+    ports:
+     - "3306:3306"
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d/
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
+    environment:
+        MYSQL_ROOT_PASSWORD: "root"
