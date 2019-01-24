@@ -45,6 +45,7 @@ std::string random_string(size_t length)
 
 std::string Encrypt::randomSalt()
 {
+	// // todo 使用安全的随机数方法
 	return random_string(8);
 }
 
