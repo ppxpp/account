@@ -52,7 +52,19 @@ public class Account {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UserInfo userInfo = new UserInfo(userName, password, PushManager.getInstance().getDeviceToken());
+                String token = PushManager.getInstance().getDeviceToken();
+                if (TextUtils.isEmpty(token)) {
+                    if (callback != null) {
+                        sUIHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                callback.onDone(false, "请稍候重试");
+                            }
+                        });
+                    }
+                    return;
+                }
+                UserInfo userInfo = new UserInfo(userName, password, token);
                 AuthReply reply =getAuthImpl().signIn(userInfo);
                 if (reply != null) {
                     final int err = reply.getErr();
@@ -82,7 +94,19 @@ public class Account {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                UserInfo userInfo = new UserInfo(userName, password, PushManager.getInstance().getDeviceToken());
+                String token = PushManager.getInstance().getDeviceToken();
+                if (TextUtils.isEmpty(token)) {
+                    if (callback != null) {
+                        sUIHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                callback.onDone(false, "请稍候重试");
+                            }
+                        });
+                    }
+                    return;
+                }
+                UserInfo userInfo = new UserInfo(userName, password, token);
                 AuthReply reply =getAuthImpl().signUp(userInfo);
                 if (reply != null) {
                     final int err = reply.getErr();
@@ -176,7 +200,7 @@ public class Account {
         if (sAuthImpl == null) {
             synchronized (Account.class) {
                 if (sAuthImpl == null) {
-                    sAuthImpl = Auth.create();
+                    sAuthImpl = Auth.create("192.168.56.101:50051");
                 }
             }
         }

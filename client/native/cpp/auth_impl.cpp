@@ -6,13 +6,13 @@
 
 namespace act {
 
-AuthImpl::AuthImpl() {
-	mClient = new AuthClient();
+AuthImpl::AuthImpl(const std::string & host) {
+	mClient = new AuthClient(host);
 }
 
-std::shared_ptr<act::Auth> act::Auth::create()
+std::shared_ptr<act::Auth> act::Auth::create(const std::string & host)
 {
-	return std::make_shared<AuthImpl>();
+	return std::make_shared<AuthImpl>(host);
 }
 
 AuthReply AuthImpl::sign_up(const act::UserInfo & user)

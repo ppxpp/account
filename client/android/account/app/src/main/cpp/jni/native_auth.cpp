@@ -22,11 +22,11 @@ CJNIEXPORT void JNICALL Java_me_ppxpp_account_auth_Auth_00024CppProxy_nativeDest
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, )
 }
 
-CJNIEXPORT jobject JNICALL Java_me_ppxpp_account_auth_Auth_00024CppProxy_create(JNIEnv* jniEnv, jobject /*this*/)
+CJNIEXPORT jobject JNICALL Java_me_ppxpp_account_auth_Auth_00024CppProxy_create(JNIEnv* jniEnv, jobject /*this*/, jstring j_host)
 {
     try {
         DJINNI_FUNCTION_PROLOGUE0(jniEnv);
-        auto r = ::act::Auth::create();
+        auto r = ::act::Auth::create(::djinni::String::toCpp(jniEnv, j_host));
         return ::djinni::release(::djinni_generated::native_auth::fromCpp(jniEnv, r));
     } JNI_TRANSLATE_EXCEPTIONS_RETURN(jniEnv, 0 /* value doesn't matter */)
 }

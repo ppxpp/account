@@ -21,11 +21,12 @@ cc_binary(
     deps = ["@com_github_grpc_grpc//:grpc++", 
 			"@com_github_grpc_grpc//:grpc_plugin_support", 
 			"@mysql_connector//:mysql_connector",
+			"@acl_cpp//:acl_cpp",
 			"@curl//:curl"],
 )
 
-cc_binary(
-    name = "client",
-    srcs = ["client.cc", "auth.grpc.pb.cc", "auth.pb.cc", "auth.grpc.pb.h", "auth.pb.h"],
-    deps = ["@com_github_grpc_grpc//:grpc++", "@com_github_grpc_grpc//:grpc_plugin_support"]
-)
+# cc_binary(
+#    name = "client",
+#    srcs = ["client.cc", "auth.grpc.pb.cc", "auth.pb.cc", "auth.grpc.pb.h", "auth.pb.h"],
+#    deps = ["@com_github_grpc_grpc//:grpc++", "@com_github_grpc_grpc//:grpc_plugin_support"]
+# )

@@ -5,6 +5,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <string>
 
 namespace act {
 
@@ -16,7 +17,7 @@ class Auth {
 public:
     virtual ~Auth() {}
 
-    static std::shared_ptr<Auth> create();
+    static std::shared_ptr<Auth> create(const std::string & host);
 
     virtual AuthReply sign_up(const UserInfo & user) = 0;
 

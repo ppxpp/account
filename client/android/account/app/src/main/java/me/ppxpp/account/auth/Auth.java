@@ -14,9 +14,9 @@ public abstract class Auth {
 
     public abstract int update(UserInfo user);
 
-    public static Auth create()
+    public static Auth create(String host)
     {
-        return CppProxy.create();
+        return CppProxy.create(host);
     }
 
     private static final class CppProxy extends Auth
@@ -74,6 +74,6 @@ public abstract class Auth {
         }
         private native int native_update(long _nativeRef, UserInfo user);
 
-        public static native Auth create();
+        public static native Auth create(String host);
     }
 }

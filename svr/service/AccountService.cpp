@@ -66,7 +66,8 @@ std::string refreshUserToken(std::string userName, std::string curtDevice)
 			// std::thread([device, userName] {
 			//	Push::pushOfflineNotification(device, userName);
 			//});
-			Push::pushOfflineNotification(device, userName);
+			// Push::pushOfflineNotification(device, userName);
+			Push::asyncPush(device, userName);
 		}
 	}
 	// create a new token

@@ -28,3 +28,9 @@ new_local_repository(
     path = "third_party/",
     build_file = "third_party/curl.BUILD",
 )
+
+new_local_repository(
+    name = "acl_cpp",
+    path = "third_party/",
+    build_file = "third_party/acl_cpp.BUILD",
+)

@@ -4,6 +4,7 @@
 Status AuthImpl::SignUp(ServerContext* context, 
         const UserInfo* request, AuthReply* response) 
 {
+	std::cout << "AuthImpl::SignUp" << std::endl;
     AccountService actSvr;
 	SignResult result;
     actSvr.signUp(request->username(), request->pwdhash(), request->device(), &result);
@@ -21,6 +22,7 @@ Status AuthImpl::SignUp(ServerContext* context,
 Status  AuthImpl::SignIn(ServerContext* context, 
     const UserInfo* request, AuthReply* response) 
 {
+	std::cout << "AuthImpl::SignIn" << std::endl;
 	AccountService actSvr;
 	SignResult result;
 	actSvr.signIn(request->username(), request->pwdhash(), request->device(), &result);
@@ -38,6 +40,7 @@ Status  AuthImpl::SignIn(ServerContext* context,
 Status  AuthImpl::SignOut(ServerContext* context, 
     const AuthInfo* request, AuthReply* response) 
 {
+	std::cout << "AuthImpl::SignOut" << std::endl;
 	AccountService actSvr;
 	SignResult result;
 	actSvr.signOut(request->token(), &result);

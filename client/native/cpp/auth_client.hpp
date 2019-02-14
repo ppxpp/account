@@ -10,7 +10,7 @@ using grpc::Status;
 
 class AuthClient {
 public:
-    AuthClient();
+    AuthClient(const std::string & host);
     auth::AuthReply signUp(const std::string userName, const std::string password, const std::string device);
     auth::AuthReply signIn(const std::string userName, const std::string password, const std::string device);
     auth::AuthReply signOut(auth::AuthInfo& authInfo);

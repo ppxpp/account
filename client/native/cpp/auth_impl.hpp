@@ -6,7 +6,7 @@ namespace act {
 class AuthImpl : public Auth  {
 public:
 
-	AuthImpl();
+	AuthImpl(const std::string & host);
 
     virtual AuthReply sign_up(const UserInfo & user) override;
 

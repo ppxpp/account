@@ -1,9 +1,10 @@
 version: '3'
 services:
   account_svr:
-    build: .
+    build: ./svr/.
     links:
      - mysql:docker_mysql
+     - redis:docker_redis
     ports:
      - "50051:50051"
   mysql:
@@ -17,3 +18,14 @@ services:
       - ./mysql/conf:/etc/mysql/conf.d
     environment:
         MYSQL_ROOT_PASSWORD: "root"
+  redis:
+    image: "redis:5.0.3"
+    container_name: redis_5_0_3
+    ports:
+      - "6379:6379"
+  push:
+    build: ./push/.
+    links:
+      - redis:docker_redis
+    ports:
+     - "50050:50050"

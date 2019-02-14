@@ -10,6 +10,9 @@ import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.android.tpush.common.Constants;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -27,13 +30,15 @@ public class PushManager {
 
     private Context mContext;
     private String mToken;
-    private List<PushMessageListener> mLiseners;
+    private List<PushMessageListener> mListeners;
+    private boolean isMainProcess;
 
-    public void init(Context context) {
+    public void init(Context context, boolean mainProcess) {
         if (context == null || mContext != null) {
             return;
         }
-        mLiseners = new CopyOnWriteArrayList<>();
+        isMainProcess = mainProcess;
+        mListeners = new CopyOnWriteArrayList<>();
         mContext = context.getApplicationContext();
         mToken = PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(KEY_DEVICE_TOKEN, null);
@@ -52,6 +57,7 @@ public class PushManager {
                         String newToken = (String) data;
                         if (!TextUtils.isEmpty(newToken) && !TextUtils.equals(newToken, mToken)) {
                             handleTokenChanged(newToken);
+                            setupRpcChannel();
                         }
                     }
 
@@ -66,6 +72,37 @@ public class PushManager {
 
         // 获取token
         XGPushConfig.getToken(context);
+        if (!TextUtils.isEmpty(mToken)) {
+            setupRpcChannel();
+        }
+    }
+
+    private void setupRpcChannel() {
+        if (!isMainProcess) {
+            return;
+        }
+        RpcPush.connect("192.168.56.101:50050", mToken, new RpcPush.PushListener() {
+            @Override
+            public void onPushMessage(String pushMsg) {
+                String text = "收到消息:" + pushMsg;
+                // 获取自定义key-value
+                if (pushMsg != null && pushMsg.length() != 0) {
+                    try {
+                        // {"title":"-","content":"-","custom_content":{"type":1,"user_name":"Alice"}}
+                        JSONObject obj = new JSONObject(pushMsg);
+                        obj = obj.getJSONObject("custom_content");
+                        if (obj.has("type") && obj.getInt("type") == 1) {
+                            String userName = obj.getString("user_name");
+                            PushManager.getInstance().notifyAccountCanceled(userName);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.d("LC", "++++++++++++++++透传消息");
+                // APP自主处理消息的过程...
+            }
+        });
     }
 
     private void handleTokenChanged(String newToken) {
@@ -82,19 +119,19 @@ public class PushManager {
     }
 
     public void addPushMessageListener(PushMessageListener listener) {
-        if (listener != null && !mLiseners.contains(listener)) {
-            mLiseners.add(listener);
+        if (listener != null && !mListeners.contains(listener)) {
+            mListeners.add(listener);
         }
     }
 
     public void removePushMessageListener(PushMessageListener listener) {
         if (listener != null) {
-            mLiseners.remove(listener);
+            mListeners.remove(listener);
         }
     }
 
     public void notifyAccountCanceled(String userName) {
-        for (PushMessageListener listener : mLiseners) {
+        for (PushMessageListener listener : mListeners) {
             listener.onAccountCanceled(userName);
         }
     }

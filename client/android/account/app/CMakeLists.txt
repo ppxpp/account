@@ -75,7 +75,7 @@ message("--------PROTO_BASE_DIR: ${PROTO_BASE_DIR}")
 message("--------PROJECT_SOURCE_DIR: ${PROJECT_SOURCE_DIR}")
 
 android_protobuf_grpc_generate_cpp(
-  HELLOWORLD_PROTO_SRCS HELLOWORLD_PROTO_HDRS ${PROTO_BASE_DIR} ${PROTO_BASE_DIR}/auth.proto)
+  HELLOWORLD_PROTO_SRCS HELLOWORLD_PROTO_HDRS ${PROTO_BASE_DIR} ${PROTO_BASE_DIR}/auth.proto ${PROTO_BASE_DIR}/push.proto)
 
 add_library(helloworld_proto_lib
   SHARED ${HELLOWORLD_PROTO_HDRS} ${HELLOWORLD_PROTO_SRCS})

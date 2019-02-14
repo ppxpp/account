@@ -1,9 +1,8 @@
 #include "auth_client.hpp"
 
-AuthClient::AuthClient()
+AuthClient::AuthClient(const std::string & host)
 {
-    this->stub_ = auth::Auth::NewStub(grpc::CreateChannel("66.42.32.104:50051",
-        grpc::InsecureChannelCredentials()));
+    this->stub_ = auth::Auth::NewStub(grpc::CreateChannel(host, grpc::InsecureChannelCredentials()));
 }
 
 auth::AuthReply AuthClient::signUp(const std::string userName, const std::string password, const std::string device)

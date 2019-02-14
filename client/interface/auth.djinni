@@ -17,10 +17,19 @@ auth_reply = record {
 
 auth = interface +c {
 		
-	static create():auth;
+	static create(host:string):auth;
 
 	sign_up(user:user_info): auth_reply;
 	sign_in(user:user_info): auth_reply;
 	sign_out(auth:auth_info): auth_reply;
 	update(user:user_info): i32;
+}
+
+push_listener = interface +j {
+    onNotify(pushMsg: string);
+}
+
+push = interface +c {
+	static create(host:string, device:string, listener: push_listener):push;
+	connect();
 }
