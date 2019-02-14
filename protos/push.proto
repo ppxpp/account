@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package push;
+
+service PushChannel {
+	rpc Connect(stream Cmd) returns (stream Notify) {}
+}
+
+service PushProxy {
+	rpc PushToClient(NotifyWrapper) returns (Ret){}
+}
+
+message Cmd {
+    int32 type = 1;
+	string msg = 2;
+	string device = 3;
+}
+
+message Notify {
+    int32 err = 1;
+	string msg = 2;
+}
+
+message NotifyWrapper {
+	string device = 1;
+	Notify notify = 2;
+}
+
+message Ret {
+	int32 err = 1;
+	string msg = 2;
+}
