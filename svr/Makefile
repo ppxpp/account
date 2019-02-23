@@ -39,12 +39,12 @@ server: account.pb.o account.grpc.pb.o server.o
 	$(CXX) $^ $(LDFLAGS) -o $@
 .PRECIOUS: %.grpc.pb.cc
 %.grpc.pb.cc: %.proto
-	$(PROTOC) -I $(PROTOS_PATH) --grpc_out=. --plugin=protoc-gen-grpc=$(GRPC_CPP_PLUGIN_PATH) $<
+	$(PROTOC) -I $(PROTOS_PATH) --grpc_out=./grpc/ --plugin=protoc-gen-grpc=$(GRPC_CPP_PLUGIN_PATH) $<
 .PRECIOUS: %.pb.cc
 %.pb.cc: %.proto
-	$(PROTOC) -I $(PROTOS_PATH) --cpp_out=. $<
+	$(PROTOC) -I $(PROTOS_PATH) --cpp_out=./grpc/ $<
 clean:
-	rm -f *.o *.pb.cc *.pb.h greeter_client greeter_server
+	rm -f *.o ./grpc/*.pb.cc ./grpc/*.pb.h greeter_client greeter_server
  # The following is to test your system and ensure a smoother experience.
 # They are by no means necessary to actually compile a grpc-enabled software.
  PROTOC_CMD = which $(PROTOC)

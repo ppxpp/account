@@ -4,9 +4,9 @@
 #include <list>
 #include <map>
 #include "AccountService.h"
-#include "../data/AccountDb.h"
-#include "../utils/Encrypt.h"
-#include "../utils/Push.h"
+#include "data/AccountDb.h"
+#include "utils/Encrypt.h"
+#include "utils/Push.h"
 
 // namespace auth
 // {
@@ -47,8 +47,6 @@ std::string SignResult::getMsg()
 
 // AccountService impl
 
-
-
 std::string refreshUserToken(std::string userName, std::string curtDevice)
 {
 	AccountDb db;
@@ -62,11 +60,7 @@ std::string refreshUserToken(std::string userName, std::string curtDevice)
 		std::string device = token.getDevice();
 		if (!device.empty() && device.compare(curtDevice) != 0)
 		{
-			// 考虑采用异步线程处理
-			// std::thread([device, userName] {
-			//	Push::pushOfflineNotification(device, userName);
-			//});
-			// Push::pushOfflineNotification(device, userName);
+			// 发送一个消息出去即可,目前仅仅支持一种消息
 			Push::asyncPush(device, userName);
 		}
 	}
