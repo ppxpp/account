@@ -31,7 +31,6 @@ void AsyncRpcChannel::HandleRpcs() {
 		// memory address of a CallData instance.
 		// The return value of Next should always be checked. This return value
 		// tells us whether there is any kind of event or cq_ is shutting down.
-		cout << "before Next" << endl;
 		bool ret = cq_->Next(&tag, &ok);
 		cout << "cq->next return " << ret << ", ok = " << ok << ", tag = " << tag << endl;
 		if (ok && tag != (void*)1)

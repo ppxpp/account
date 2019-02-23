@@ -49,12 +49,9 @@ void XinGePush::push(std::string deviceToken, std::string message)
 			+ "&sign=" + sign;
 		cout << "url = " << endl << url << endl;
 		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-		/* example.com is redirected, so we tell libcurl to follow redirection */
 		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 
-		/* Perform the request, res will get the return code */
 		res = curl_easy_perform(curl);
-		/* Check for errors */
 		if (res != CURLE_OK)
 		{
 			cout << "curl_easy_perform() failed: " << endl << curl_easy_strerror(res) << endl;

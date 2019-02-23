@@ -32,16 +32,10 @@ void RunServer() {
 	ServerBuilder builder;
 	// todo 使用SST连接
 	builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
-	// Register "service" as the instance through which we'll communicate with
-	// clients. In this case it corresponds to an *synchronous* service.
 	builder.RegisterService(&rpcChannel);
 	builder.RegisterService(&pushProxy);
-	// Finally assemble the server.
 	std::unique_ptr<Server> server(builder.BuildAndStart());
 	std::cout << "Push Server listening on " << server_address << std::endl;
-
-	// Wait for the server to shutdown. Note that some other thread must be
-	// responsible for shutting down the server for this call to ever return.
 	server->Wait();
 }
 
@@ -53,10 +47,7 @@ void RunAsyncChannelServer()
 
 	builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
 	builder.RegisterService(pushProxy);
-
-	//context_.AsyncNotifyWhenDone(reinterpret_cast<void*>(Type::DONE));
 	std::cout << "Server listening on " << server_address << std::endl;
-
 	RedisCache* cache = new RedisCache();
 	AsyncRpcChannel* channel = new AsyncRpcChannel(cache, &builder);
 }
@@ -72,9 +63,7 @@ int main(int argc, char const *argv[])
 	std::cout << "Push Server Running" << std::endl;
 	std::thread t1(RunTransfer);
 	std::thread t2(RunAsyncChannelServer);
-	//RunServer();
 	t1.join();
 	t2.join();
-	//RunAsyncChannelServer();
 	return 0;
 }

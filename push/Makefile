@@ -32,19 +32,15 @@ GRPC_CPP_PLUGIN = grpc_cpp_plugin
 GRPC_CPP_PLUGIN_PATH ?= `which $(GRPC_CPP_PLUGIN)`
 PROTOS_PATH = ../protos
 vpath %.proto $(PROTOS_PATH)
-all: system-check client server
-client: account.pb.o account.grpc.pb.o client.o
-	$(CXX) $^ $(LDFLAGS) -o $@
-server: account.pb.o account.grpc.pb.o server.o
-	$(CXX) $^ $(LDFLAGS) -o $@
+all: system-check
 .PRECIOUS: %.grpc.pb.cc
 %.grpc.pb.cc: %.proto
-	$(PROTOC) -I $(PROTOS_PATH) --grpc_out=. --plugin=protoc-gen-grpc=$(GRPC_CPP_PLUGIN_PATH) $<
+	$(PROTOC) -I $(PROTOS_PATH) --grpc_out=./grpc --plugin=protoc-gen-grpc=$(GRPC_CPP_PLUGIN_PATH) $<
 .PRECIOUS: %.pb.cc
 %.pb.cc: %.proto
-	$(PROTOC) -I $(PROTOS_PATH) --cpp_out=. $<
+	$(PROTOC) -I $(PROTOS_PATH) --cpp_out=./grpc $<
 clean:
-	rm -f *.o *.pb.cc *.pb.h greeter_client greeter_server
+	rm -f grpc/*.o grpc/*.pb.cc grpc/*.pb.h
  # The following is to test your system and ensure a smoother experience.
 # They are by no means necessary to actually compile a grpc-enabled software.
  PROTOC_CMD = which $(PROTOC)

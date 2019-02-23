@@ -107,9 +107,3 @@ void Transfer::poll()
 {
 	pollMsgQueue();
 }
-
-
-void Transfer::develiverNotify(std::string device, std::string msg)
-{
-
-}
