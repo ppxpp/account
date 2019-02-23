@@ -6,6 +6,8 @@
 
 [消息推送系统架构&时序图](https://github.com/ppxpp/account/blob/master/doc/push_system_design.md)
 
+[常用密码hash算法](https://github.com/ppxpp/account/blob/master/doc/password_hash.md)
+
 # 部署文档
 > todo
 
